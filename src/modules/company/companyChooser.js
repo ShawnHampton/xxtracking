@@ -28,6 +28,7 @@ export default class CompanyChooser extends React.PureComponent {
 		return (
 			<Fragment>
 				<Button
+					variant="outlined"
 					aria-owns={anchorEl ? 'menu-choosecompany' : null}
 					aria-haspopup="true"
 					onClick={this.handleMenu}

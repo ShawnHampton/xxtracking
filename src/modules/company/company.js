@@ -6,6 +6,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import CompanyOperator from './companyOperator';
+import { payout, withhold } from './actions';
+
 export class Company extends React.PureComponent {
 	render() {
 		return (
@@ -17,6 +20,13 @@ export class Company extends React.PureComponent {
 						</Typography>
 					</Toolbar>
 				</AppBar>
+				<Toolbar>
+					<CompanyOperator
+						payout={this.props.payout}
+						withhold={this.props.withhold}
+						company={this.props.company}
+					/>
+				</Toolbar>
 			</Paper>
 		);
 	}
@@ -26,5 +36,5 @@ const mapStateToProps = (state, props) => ({});
 
 export default connect(
 	mapStateToProps,
-	{}
+	{ payout, withhold }
 )(Company);

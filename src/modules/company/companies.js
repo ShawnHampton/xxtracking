@@ -7,7 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import { getStartedMajors } from '../game/selectors';
-import { Company } from './company';
+import Company from './company';
 
 export class Companies extends React.PureComponent {
 	render() {

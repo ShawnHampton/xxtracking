@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import GameChooser from './gameChooser';
 import Players from '../player/players';
 import Companies from '../company/companies';
+import Scores from '../scores/scores';
 
 import { startGame, stopGame } from './actions';
 import { getGameStatus } from './selectors';
@@ -67,6 +68,7 @@ export class Main extends React.PureComponent {
 					</AppBar>
 					<Players />
 					<Companies />
+					<Scores />
 				</div>
 			);
 		} else {

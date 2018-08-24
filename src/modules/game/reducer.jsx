@@ -19,15 +19,24 @@ export default function (state = fromJS({
 	},
 	play: {
 		bank: 0,
-		currentPhase: "Initial Stock Round",
+		currentPhase: "OR",
+		currentOR: 0,
 		startedMajors: [],
-		operatingRounds: []
+		operatingRounds: [
+			{
+				"B&O": {}
+			}
+		]
 	}
 }), action) {
 	let s = state;
 	switch (action.type) {
 		case COMPANY.START_COMPANY:
 			s = state.setIn(['play', 'startedMajors'], state.getIn(['play', 'startedMajors']).push(action.payload.company));
+			return s;
+		case COMPANY.OPERATE_PAY:
+			s = state.setIn(['play', 'operatingRounds', action.payload.operatingRound, action.payload.companyName],
+				fromJS(action.payload.payoutChart));
 			return s;
 		default:
 	}
