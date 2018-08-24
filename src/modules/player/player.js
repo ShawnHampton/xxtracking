@@ -1,6 +1,7 @@
-import React from 'react';
 import { connect } from 'react-redux';
+import React, { Fragment } from 'react';
 
+import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,12 +9,49 @@ import Typography from '@material-ui/core/Typography';
 
 import CompanyChooser from '../company/companyChooser';
 
-import { startCompany } from '../stock/actions';
-import { acquirePrivateCompany } from './actions';
-import { getGame, getUnstartedMajors } from '../game/selectors';
+import { startCompany, buyStock } from '../company/actions';
+import {
+	getGame,
+	getStartedMajors,
+	getUnstartedMajors
+} from '../game/selectors';
 import { getGameStatus } from '../main/selectors';
+import { getStocks } from './selectors';
 
 export class Player extends React.PureComponent {
+	renderBody() {
+		return (
+			<Fragment>
+				<Toolbar variant="dense" className="companyToolbar">
+					<CompanyChooser
+						title="Start Company"
+						player={this.props.player}
+						companies={this.props.unstarted}
+						choose={this.props.startCompany}
+					/>
+					<CompanyChooser
+						title="Buy Share"
+						player={this.props.player}
+						companies={this.props.started}
+						choose={this.props.buyStock}
+					/>
+				</Toolbar>
+
+				<div className="playerStocks">
+					{Object.keys(this.props.stocks).map(stockName => {
+						return (
+							<Chip
+								key={stockName}
+								className="stockChip"
+								label={stockName + ':' + this.props.stocks[stockName]}
+							/>
+						);
+					})}
+				</div>
+			</Fragment>
+		);
+	}
+
 	render() {
 		return (
 			<Paper className="player">
@@ -28,16 +66,7 @@ export class Player extends React.PureComponent {
 					</Toolbar>
 				</AppBar>
 
-				{this.props.gameStatus.state !== 'ready' ? (
-					<Toolbar variant="dense" className="companyToolbar">
-						<CompanyChooser
-							title="Start Company"
-							player={this.props.player}
-							companies={this.props.unstarted}
-							choose={this.props.startCompany}
-						/>
-					</Toolbar>
-				) : null}
+				{this.props.gameStatus.state !== 'ready' ? this.renderBody() : null}
 			</Paper>
 		);
 	}
@@ -46,10 +75,12 @@ export class Player extends React.PureComponent {
 const mapStateToProps = (state, props) => ({
 	game: getGame(state),
 	gameStatus: getGameStatus(state),
-	unstarted: getUnstartedMajors(state)
+	unstarted: getUnstartedMajors(state),
+	started: getStartedMajors(state),
+	stocks: getStocks(state, props.player.name)
 });
 
 export default connect(
 	mapStateToProps,
-	{ startCompany, acquirePrivateCompany }
+	{ startCompany, buyStock }
 )(Player);

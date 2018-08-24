@@ -1,8 +1,20 @@
 export const PLAYER = {
+	SET_STOCK: 'PLAYER_SET_STOCK',
 	ADD_PLAYER: 'PLAYER_ADD_PLAYER',
 	REMOVE_PLAYER: 'PLAYER_REMOVE_PLAYER',
 	SET_PERSONAL_MONEY: 'PLAYER_SET_PERSONAL_MONEY',
 	ACQUIRE_PRIVATE_COMPANY: 'PLAYER_ACQUIRE_PRIVATE_COMPANY'
+};
+
+export const setStock = (playerName, companyName, count) => {
+	return {
+		type: PLAYER.SET_STOCK,
+		payload: {
+			playerName,
+			companyName,
+			count
+		}
+	};
 };
 
 export const addPlayer = player => {

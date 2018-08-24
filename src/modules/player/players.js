@@ -15,7 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Player from './player';
 
-import { startCompany } from '../stock/actions';
+import { startCompany } from '../company/actions';
 import { addPlayer, acquirePrivateCompany } from './actions';
 import { getPlayers } from './selectors';
 import { getGameStatus } from '../main/selectors';
