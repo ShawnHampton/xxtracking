@@ -18,8 +18,12 @@ export default function (state = fromJS({
 			s = state.setIn(['players', action.payload.playerName, "personalMoney"], action.payload.personalMoney);
 			return s;
 		case PLAYER.SET_STOCK:
-			s = state.setIn(['players', action.payload.playerName, "stocks", action.payload.companyName],
-				action.payload.count);
+			if (action.payload.count === 0) {
+				s = state.deleteIn(['players', action.payload.playerName, "stocks", action.payload.companyName]);
+			} else {
+				s = state.setIn(['players', action.payload.playerName, "stocks", action.payload.companyName],
+					action.payload.count);
+			}
 			return s;
 		default:
 	}

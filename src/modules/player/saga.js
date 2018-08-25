@@ -14,6 +14,17 @@ function* handleBuyStock(action) {
 	);
 }
 
+function* handleSellStock(action) {
+	const player = yield select(getPlayer, action.payload.player);
+	let currentCount = player.stocks[action.payload.company] || 0;
+	currentCount = Math.max(currentCount - 1, 0);
+
+	yield put(
+		setStock(action.payload.player, action.payload.company, currentCount)
+	);
+}
+
 export default function* player() {
 	yield takeEvery(COMPANY.BUY_STOCK, handleBuyStock);
+	yield takeEvery(COMPANY.SELL_STOCK, handleSellStock);
 }

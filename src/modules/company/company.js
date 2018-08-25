@@ -25,6 +25,7 @@ export class Company extends React.PureComponent {
 						payout={this.props.payout}
 						withhold={this.props.withhold}
 						company={this.props.company}
+						disabled={this.props.play.currentPhase !== 'OR'}
 					/>
 				</Toolbar>
 			</Paper>

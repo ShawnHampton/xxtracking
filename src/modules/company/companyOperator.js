@@ -38,7 +38,11 @@ export default class CompanyOperator extends React.PureComponent {
 	render() {
 		return (
 			<Fragment>
-				<Button variant="outlined" onClick={this.handleClickOpen}>
+				<Button
+					variant="outlined"
+					onClick={this.handleClickOpen}
+					disabled={this.props.disabled}
+				>
 					Operate
 				</Button>
 				<Dialog
@@ -49,7 +53,8 @@ export default class CompanyOperator extends React.PureComponent {
 					<DialogTitle id="form-dialog-title">Operate</DialogTitle>
 					<DialogContent>
 						<DialogContentText>
-							Enter the amount the company operates for
+							Enter the TOTAL amount the company operates for (not per share
+							value)
 						</DialogContentText>
 						<TextField
 							autoFocus

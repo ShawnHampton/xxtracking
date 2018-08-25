@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import CompanyChooser from '../company/companyChooser';
 
-import { startCompany, buyStock } from '../company/actions';
+import { startCompany, buyStock, sellStock } from '../company/actions';
 import {
 	getGame,
 	getStartedMajors,
@@ -34,6 +34,12 @@ export class Player extends React.PureComponent {
 						player={this.props.player}
 						companies={this.props.started}
 						choose={this.props.buyStock}
+					/>
+					<CompanyChooser
+						title="Sell Share"
+						player={this.props.player}
+						companies={Object.keys(this.props.stocks)}
+						choose={this.props.sellStock}
 					/>
 				</Toolbar>
 
@@ -82,5 +88,5 @@ const mapStateToProps = (state, props) => ({
 
 export default connect(
 	mapStateToProps,
-	{ startCompany, buyStock }
+	{ startCompany, buyStock, sellStock }
 )(Player);

@@ -10,6 +10,7 @@ import GameChooser from './gameChooser';
 import Players from '../player/players';
 import Companies from '../company/companies';
 import Scores from '../scores/scores';
+import RoundManager from '../game/roundManager';
 
 import { startGame, stopGame } from './actions';
 import { getGameStatus } from './selectors';
@@ -60,9 +61,7 @@ export class Main extends React.PureComponent {
 							<Typography variant="title" className="title">
 								{this.props.game.name}
 							</Typography>
-							<Typography variant="headline" className="title">
-								{this.props.play.currentPhase}
-							</Typography>
+							<RoundManager />
 							<Button onClick={this.props.stopGame}>Finish Game</Button>
 						</Toolbar>
 					</AppBar>

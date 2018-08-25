@@ -19,17 +19,9 @@ import {
 import { getPlayers } from '../player/selectors';
 
 export class Scores extends React.PureComponent {
-	render() {
-		return (
-			<Paper id="scores">
-				<AppBar position="static" color="default">
-					<Toolbar variant="dense">
-						<Typography variant="title" className="title">
-							Scores
-						</Typography>
-					</Toolbar>
-				</AppBar>
-
+	renderScoreCard() {
+		if (this.props.operatingRound) {
+			return (
 				<Card className="operatingRoundCard">
 					<Table>
 						<TableHead>
@@ -40,6 +32,9 @@ export class Scores extends React.PureComponent {
 								{Object.keys(this.props.operatingRound).map(company => {
 									return <TableCell key={company}>{company}</TableCell>;
 								})}
+								<TableCell component="th" scope="row">
+									Total
+								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -56,12 +51,41 @@ export class Scores extends React.PureComponent {
 												</TableCell>
 											);
 										})}
+										<TableCell>
+											{Object.keys(this.props.operatingRound)
+												.map(company => {
+													return this.props.operatingRound[company][
+														player.name
+													];
+												})
+												.reduce((acc, curr) => {
+													return acc + curr;
+												})}
+										</TableCell>
 									</TableRow>
 								);
 							})}
 						</TableBody>
 					</Table>
 				</Card>
+			);
+		}
+
+		return null;
+	}
+
+	render() {
+		return (
+			<Paper id="scores">
+				<AppBar position="static" color="default">
+					<Toolbar variant="dense">
+						<Typography variant="title" className="title">
+							Scores
+						</Typography>
+					</Toolbar>
+				</AppBar>
+
+				{this.renderScoreCard()}
 			</Paper>
 		);
 	}

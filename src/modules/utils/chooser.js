@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-export default class CompanyChooser extends React.PureComponent {
+export default class Chooser extends React.PureComponent {
 	state = {
 		anchorEl: null
 	};
@@ -17,8 +17,8 @@ export default class CompanyChooser extends React.PureComponent {
 		this.setState({ anchorEl: null });
 	};
 
-	handleChooseMenu = company => {
-		this.props.choose(this.props.player.name, company, 0);
+	handleChooseMenu = value => {
+		this.props.choose(value);
 		this.setState({ anchorEl: null });
 	};
 
@@ -29,28 +29,28 @@ export default class CompanyChooser extends React.PureComponent {
 			<Fragment>
 				<Button
 					variant="outlined"
-					aria-owns={anchorEl ? 'menu-choosecompany' : null}
+					aria-owns={anchorEl ? 'menu-chooser' : null}
 					aria-haspopup="true"
 					onClick={this.handleMenu}
 					color="inherit"
-					disabled={this.props.companies.length === 0}
+					disabled={this.props.values.length === 0}
 				>
 					{this.props.title}
 				</Button>
 
 				<Menu
-					id={'menu-choosecompany'}
+					id={'menu-chooser'}
 					anchorEl={anchorEl}
 					open={Boolean(anchorEl)}
 					onClose={this.handleChooseMenu}
 				>
-					{this.props.companies.map(company => {
+					{this.props.values.map(value => {
 						return (
 							<MenuItem
-								key={company.name || company}
-								onClick={() => this.handleChooseMenu(company.name || company)}
+								key={value}
+								onClick={() => this.handleChooseMenu(value)}
 							>
-								{company.name || company}
+								{value}
 							</MenuItem>
 						);
 					})}

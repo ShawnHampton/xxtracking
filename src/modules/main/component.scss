@@ -14,6 +14,12 @@
     flex: 1 1;
   }
 
+  #roundManager {
+    .title {
+      padding-right: 12px;
+    }
+  }
+
   #players {
     display: flex;
     flex-flow: row nowrap;

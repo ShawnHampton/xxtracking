@@ -25,7 +25,10 @@ export const getOperatingRounds = createSelector(
 
 export const getCurrentOperatingRound = createSelector(
 	[getOperatingRoundsImmutable, getPlayImmutable],
-	(ors, play) => ors.get(play.get('currentOR')).toJS()
+	(ors, play) => {
+		const current = ors.get(play.get('currentOR'));
+		return current ? current.toJS() : null;
+	}
 );
 
 export const getStartedMajors = createSelector(
@@ -47,3 +50,14 @@ export const getUnstartedMajors = createSelector(
 		});
 	}
 );
+
+export const getRoundLabel = createSelector([getPlayImmutable], play => {
+	play = play.toJS();
+	if (play.currentPhase === 'OR') {
+		return `${play.currentPhase} ${play.currentRound}.${play.currentOR}`;
+	} else if (play.currentPhase === 'SR') {
+		return `${play.currentPhase} ${play.currentRound}`;
+	}
+
+	return `${play.currentPhase}`;
+});

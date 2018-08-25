@@ -1,5 +1,6 @@
 import {fromJS} from "immutable";
 import {COMPANY} from "../company/actions";
+import {GAME} from "./actions";
 
 export default function (state = fromJS({
 	game: {
@@ -19,14 +20,11 @@ export default function (state = fromJS({
 	},
 	play: {
 		bank: 0,
-		currentPhase: "OR",
-		currentOR: 0,
+		currentPhase: "SR",
+		currentOR: 1,
+		currentRound: 1,
 		startedMajors: [],
-		operatingRounds: [
-			{
-				"B&O": {}
-			}
-		]
+		operatingRounds: []
 	}
 }), action) {
 	let s = state;
@@ -37,6 +35,15 @@ export default function (state = fromJS({
 		case COMPANY.OPERATE_PAY:
 			s = state.setIn(['play', 'operatingRounds', action.payload.operatingRound, action.payload.companyName],
 				fromJS(action.payload.payoutChart));
+			return s;
+		case GAME.CHANGE_PHASE:
+			s = state.setIn(['play', 'currentPhase'], action.payload);
+			return s;
+		case GAME.CHANGE_CURRENT_OR:
+			s = state.setIn(['play', 'currentOR'], action.payload);
+			return s;
+		case GAME.CHANGE_CURRENT_ROUND:
+			s = state.setIn(['play', 'currentRound'], action.payload);
 			return s;
 		default:
 	}
