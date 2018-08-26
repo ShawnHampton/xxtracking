@@ -12,11 +12,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import {
-	getCurrentOperatingRound,
-	getOperatingRounds
-} from '../game/selectors';
+import { getCurrentOperatingRound } from '../game/selectors';
 import { getPlayers } from '../player/selectors';
+import ORChart from './orChart';
 
 export class Scores extends React.PureComponent {
 	renderScoreCard() {
@@ -86,6 +84,8 @@ export class Scores extends React.PureComponent {
 				</AppBar>
 
 				{this.renderScoreCard()}
+
+				<ORChart />
 			</Paper>
 		);
 	}

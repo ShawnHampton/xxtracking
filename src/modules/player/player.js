@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React, { Fragment } from 'react';
 
 import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -49,7 +50,8 @@ export class Player extends React.PureComponent {
 							<Chip
 								key={stockName}
 								className="stockChip"
-								label={stockName + ':' + this.props.stocks[stockName]}
+								avatar={<Avatar>{stockName}</Avatar>}
+								label={this.props.stocks[stockName]}
 							/>
 						);
 					})}

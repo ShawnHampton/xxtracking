@@ -24,7 +24,7 @@ export default function (state = fromJS({
 		currentOR: 1,
 		currentRound: 1,
 		startedMajors: [],
-		operatingRounds: []
+		operatingRounds: {}
 	}
 }), action) {
 	let s = state;
