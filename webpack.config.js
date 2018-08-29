@@ -10,6 +10,9 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || '7890';
 
+const BUILD_DIR = path.resolve(__dirname, './build');
+const APP_DIR = path.resolve(__dirname, './src/client');
+
 loaders.push({
 	test: /\.scss$/,
 	loaders: ['style-loader', 'css-loader?importLoaders=1', 'sass-loader'],
@@ -19,23 +22,19 @@ loaders.push({
 module.exports = {
 	entry: [
 		'babel-polyfill',
-		'./src/index.js' // your app's entry point
+		APP_DIR + '/index.js' // your app's entry point
 	],
 	devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
 	output: {
 		publicPath: '/',
-		path: path.join(__dirname, 'public'),
+		path: BUILD_DIR,
 		filename: 'bundle.js'
 	},
 	resolve: {
 		extensions: ['.js', '.jsx'],
-		//Allow locating dependancies relative to the src directory and then the js directory.
+		// Allow locating dependencies relative to the src directory and then the js directory.
 		// no need for .. hell
-		modules: [
-			path.join(__dirname, '/src'),
-			path.join(__dirname, '/src/js'),
-			'node_modules'
-		],
+		modules: [APP_DIR, APP_DIR + '/js', 'node_modules'],
 		alias: {
 			symbol: 'es6-symbol'
 		}
@@ -55,14 +54,14 @@ module.exports = {
 	plugins: [
 		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.NamedModulesPlugin(),
-		new CopyWebpackPlugin([{ from: 'src/images', to: 'images' }]),
+		new CopyWebpackPlugin([{ from: 'src/client/images', to: 'images' }]),
 		new ExtractTextPlugin({
 			filename: 'style.css',
 			allChunks: true
 		}),
 		new DashboardPlugin(),
 		new HtmlWebpackPlugin({
-			template: './src/template.html',
+			template: './src/client/template.html',
 			files: {
 				css: ['style.css'],
 				js: ['bundle.js']

@@ -5,8 +5,9 @@
   "main": "''",
   "scripts": {
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
-    "build-dev": "webpack --progress --profile --colors",
+    "build-dev": "webpack --progress --profile --colors --watch --hot --devtool inline-source-map",
     "start": "webpack-dev-server --progress --profile --colors",
+    "server": "nodemon src/server/index.js",
     "watch": "webpack-dev-server --watch --progress --colors --inline --hot --devtool inline-source-map",
     "watch-production": "webpack-dev-server --config webpack.production.config.js --progress --profile --colors",
     "lint": "eslint --ext js --ext jsx src || exit 0",
@@ -24,6 +25,7 @@
     "@material-ui/core": "^1.4.3",
     "@material-ui/icons": "^2.0.1",
     "d3": "^5.7.0",
+    "express": "^4.16.3",
     "i": "^0.3.6",
     "immutable": "^3.8.1",
     "lodash": "4.17.4",
