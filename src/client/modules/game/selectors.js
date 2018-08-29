@@ -1,4 +1,4 @@
-import {createSelector} from 'reselect';
+import { createSelector } from 'reselect';
 
 const getPlayImmutable = state => state.getIn(['game', 'play'], []);
 const getGameImmutable = state => state.getIn(['game', 'game'], {});
@@ -14,8 +14,9 @@ const getPlayerImmutable = (state, name) =>
 const getStocksImmutable = (state, name) =>
 	state.getIn(['game', 'play', 'players', name, 'stocks'], []);
 
-export const getPlay = createSelector([getPlayImmutable], value =>
-	value ? value.toJS() : null
+export const getPlay = createSelector(
+	[getPlayImmutable],
+	value => (value ? value.toJS() : null)
 );
 export const getGame = createSelector([getGameImmutable], value =>
 	value.toJS()
@@ -69,12 +70,12 @@ export const getRoundLabel = createSelector([getPlayImmutable], play => {
 });
 
 export const getPlayers = createSelector([getPlayImmutable], play => {
-	console.log("play", play);
+	console.log('play', play);
 
 	if (play)
-		console.log("players", play.players, Object.values(play.players.toJS());
+		console.log('players', play.players, Object.values(play.players.toJS()));
 
-	return (play && play.players) ? Object.values(play.players.toJS()) : []
+	return play && play.players ? Object.values(play.players.toJS()) : [];
 });
 
 export const getPlayer = createSelector(
@@ -85,4 +86,3 @@ export const getPlayer = createSelector(
 export const getStocks = createSelector([getStocksImmutable], stocks =>
 	stocks.toJS()
 );
-
