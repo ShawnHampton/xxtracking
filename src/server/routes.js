@@ -18,7 +18,8 @@ apiRouter
 			currentRound: 1,
 			startedMajors: [],
 			players: {},
-			operatingRounds: {}
+			operatingRounds: {},
+			status: 'ready'
 		};
 		play.game = req.body.game;
 		play.id = uuidv1();

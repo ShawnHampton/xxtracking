@@ -15,9 +15,9 @@ import {
 	getGame,
 	getStocks,
 	getStartedMajors,
-	getUnstartedMajors
+	getUnstartedMajors,
+	getGameStatus
 } from '../game/selectors';
-import { getGameStatus } from '../main/selectors';
 
 export class Player extends React.PureComponent {
 	renderBody() {
@@ -74,7 +74,7 @@ export class Player extends React.PureComponent {
 					</Toolbar>
 				</AppBar>
 
-				{this.props.gameStatus.state !== 'ready' ? this.renderBody() : null}
+				{this.props.gameStatus !== 'ready' ? this.renderBody() : null}
 			</Paper>
 		);
 	}

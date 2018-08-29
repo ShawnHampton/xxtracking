@@ -69,13 +69,16 @@ export const getRoundLabel = createSelector([getPlayImmutable], play => {
 	return `${play.currentPhase}`;
 });
 
+export const getGameStatus = createSelector([getPlayImmutable], play => {
+	if (!play) return 'new';
+
+	return play.get('status');
+});
+
 export const getPlayers = createSelector([getPlayImmutable], play => {
-	console.log('play', play);
-
-	if (play)
-		console.log('players', play.players, Object.values(play.players.toJS()));
-
-	return play && play.players ? Object.values(play.players.toJS()) : [];
+	return play && play.get('players')
+		? Object.values(play.get('players').toJS())
+		: [];
 });
 
 export const getPlayer = createSelector(

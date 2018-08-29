@@ -24,6 +24,15 @@ export default function (state = fromJS({
 }), action) {
 	let s = state;
 	switch (action.type) {
+		case MAIN.GAME_LOADED:
+			s = state.set('play', fromJS(action.payload));
+			return s;
+		case MAIN.START_GAME:
+			s = state.setIn(['play', 'status'], "started");
+			return s;
+		case MAIN.STOP_GAME:
+			s = state.setIn(['play', 'status'], "finished");
+			return s;
 		case PLAYER.ADD_PLAYER:
 			s = state.setIn(['play', 'players', action.payload.name], fromJS(action.payload));
 			s = s.setIn(['play', 'players', action.payload.name, "personalMoney"], 0);
@@ -49,9 +58,6 @@ export default function (state = fromJS({
 		case COMPANY.OPERATE_PAY:
 			s = state.setIn(['play', 'operatingRounds', action.payload.operatingRound, action.payload.companyName],
 				fromJS(action.payload.payoutChart));
-			return s;
-		case MAIN.GAME_LOADED:
-			s = state.set('play', fromJS(action.payload));
 			return s;
 		case GAME.CHANGE_PHASE:
 			s = state.setIn(['play', 'currentPhase'], action.payload);
