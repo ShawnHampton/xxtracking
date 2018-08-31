@@ -10,14 +10,11 @@ import Player from './player';
 
 import { startCompany } from '../company/actions';
 import { addPlayer, acquirePrivateCompany } from './actions';
-import { getGameStatus } from '../main/selectors';
-import { getGame, getPlayers } from '../game/selectors';
+import { getGame, getPlayers, getGameStatus } from '../game/selectors';
 import PlayerCreator from './playerCreator';
 
 export class Players extends React.PureComponent {
 	render() {
-		console.log("Player", this.props.players);
-
 		return (
 			<Paper>
 				<AppBar position="static" color="default">

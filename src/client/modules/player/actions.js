@@ -6,7 +6,7 @@ export const PLAYER = {
 	ACQUIRE_PRIVATE_COMPANY: 'PLAYER_ACQUIRE_PRIVATE_COMPANY'
 };
 
-export const setStock = (playerName, companyName, count) => {
+export const setPlayerStock = (playerName, companyName, count) => {
 	return {
 		type: PLAYER.SET_STOCK,
 		payload: {

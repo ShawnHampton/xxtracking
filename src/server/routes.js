@@ -7,6 +7,37 @@ const apiRouter = express.Router();
 
 const dataDir = 'data/plays';
 
+const GAMES = {
+	'1846': {
+		name: '1846',
+		minPlayers: 2,
+		maxPlayers: 6,
+		bankSize: [7700, 7700, 7700, 7700, 7700],
+		initialPlayerMoney: [500, 500, 500, 500, 500],
+
+		majors: [
+			{
+				name: 'B&O',
+				ipo: 10,
+				bank: 0,
+				state: 'unstarted'
+			},
+			{
+				name: 'GWT',
+				ipo: 10,
+				bank: 0,
+				state: 'unstarted'
+			},
+			{
+				name: 'IC',
+				ipo: 10,
+				bank: 0,
+				state: 'unstarted'
+			}
+		]
+	}
+};
+
 apiRouter
 	.route('/plays')
 	.post((req, res) => {
@@ -16,12 +47,18 @@ apiRouter
 			currentPhase: 'SR',
 			currentOR: 1,
 			currentRound: 1,
-			startedMajors: [],
 			players: {},
-			operatingRounds: {}
+			operatingRounds: {},
+			status: 'ready',
+			majors: {}
 		};
 		play.game = req.body.game;
 		play.id = uuidv1();
+
+		const game = GAMES[req.body.game];
+		game.majors.forEach(major => {
+			play.majors[major.name] = major;
+		});
 
 		fs.writeFile(
 			path.join(dataDir, play.id + '.json'),

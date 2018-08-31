@@ -1,5 +1,5 @@
+import { connect } from 'react-redux';
 import React from 'react';
-import {connect} from 'react-redux';
 
 import Paper from '@material-ui/core/Paper';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,14 +18,13 @@ import Companies from '../company/companies';
 import Scores from '../scores/scores';
 import RoundManager from '../game/roundManager';
 
-import {startGame, stopGame, saveGame} from './actions';
-import {getGameStatus, getPlays} from './selectors';
-import {getGame, getPlay, getPlayers} from '../game/selectors';
-import {loadSavedGame} from "./actions";
+import { loadSavedGame, saveGame, startGame, stopGame } from './actions';
+import { getPlays } from './selectors';
+import { getGame, getGameStatus, getPlay, getPlayers } from '../game/selectors';
 
 export class Main extends React.PureComponent {
 	render() {
-		if (this.props.gameStatus.state === 'new') {
+		if (this.props.gameStatus === 'new') {
 			return (
 				<div id="main">
 					<AppBar position="static" className="mainAppBar">
@@ -42,26 +41,30 @@ export class Main extends React.PureComponent {
 								<Typography variant="title" className="title">
 									Saved Plays
 								</Typography>
-								<GameChooser/>
+								<GameChooser />
 							</Toolbar>
 						</AppBar>
 
 						<List>
-							{this.props.plays.map((play) => {
+							{this.props.plays.map(play => {
 								return (
-									<ListItem key={play.id} button onClick={() => this.props.loadSavedGame(play.id)}>
+									<ListItem
+										key={play.id}
+										button
+										onClick={() => this.props.loadSavedGame(play.id)}
+									>
 										<Avatar>
-											<ImageIcon/>
+											<ImageIcon />
 										</Avatar>
-										<ListItemText primary={play.game} secondary="Jan 9, 2014"/>
+										<ListItemText primary={play.game} secondary="Jan 9, 2014" />
 									</ListItem>
-								)
+								);
 							})}
 						</List>
 					</Paper>
 				</div>
 			);
-		} else if (this.props.gameStatus.state === 'ready') {
+		} else if (this.props.gameStatus === 'ready') {
 			return (
 				<div id="main">
 					<AppBar position="static" className="mainAppBar">
@@ -79,10 +82,10 @@ export class Main extends React.PureComponent {
 							</Button>
 						</Toolbar>
 					</AppBar>
-					<Players/>
+					<Players />
 				</div>
 			);
-		} else if (this.props.gameStatus.state === 'started') {
+		} else if (this.props.gameStatus === 'started') {
 			return (
 				<div id="main">
 					<AppBar position="static" className="mainAppBar">
@@ -90,14 +93,16 @@ export class Main extends React.PureComponent {
 							<Typography variant="title" className="title">
 								{this.props.game.name}
 							</Typography>
-							<RoundManager/>
-							<Button onClick={() => this.props.saveGame(this.props.play)}>Save Game</Button>
+							<RoundManager />
+							<Button onClick={() => this.props.saveGame(this.props.play)}>
+								Save Game
+							</Button>
 							<Button onClick={this.props.stopGame}>Finish Game</Button>
 						</Toolbar>
 					</AppBar>
-					<Players/>
-					<Companies/>
-					<Scores/>
+					<Players />
+					<Companies />
+					<Scores />
 				</div>
 			);
 		} else {
@@ -111,7 +116,7 @@ export class Main extends React.PureComponent {
 							<Button onClick={this.props.startGame}>Restart Game</Button>
 						</Toolbar>
 					</AppBar>
-					<Players/>
+					<Players />
 				</div>
 			);
 		}
@@ -128,5 +133,5 @@ const mapStateToProps = (state, props) => ({
 
 export default connect(
 	mapStateToProps,
-	{startGame, stopGame, loadSavedGame, saveGame}
+	{ startGame, stopGame, loadSavedGame, saveGame }
 )(Main);

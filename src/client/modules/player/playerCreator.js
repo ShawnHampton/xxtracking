@@ -38,7 +38,7 @@ export default class PlayerCreator extends React.PureComponent {
 					onClick={this.handleClickOpen}
 					disabled={
 						this.props.players.length >= this.props.game.maxPlayers ||
-						this.props.gameStatus.state !== 'ready'
+						this.props.gameStatus !== 'ready'
 					}
 				>
 					Add Player

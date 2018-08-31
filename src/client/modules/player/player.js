@@ -10,14 +10,14 @@ import Typography from '@material-ui/core/Typography';
 
 import CompanyChooser from '../company/companyChooser';
 
-import { startCompany, buyStock, sellStock } from '../company/actions';
+import { buyStock, sellStock, startCompany } from '../company/actions';
 import {
 	getGame,
-	getStocks,
+	getGameStatus,
 	getStartedMajors,
+	getStocks,
 	getUnstartedMajors
 } from '../game/selectors';
-import { getGameStatus } from '../main/selectors';
 
 export class Player extends React.PureComponent {
 	renderBody() {
@@ -46,14 +46,15 @@ export class Player extends React.PureComponent {
 
 				<div className="playerStocks">
 					{Object.keys(this.props.stocks).map(stockName => {
-						return (
-							<Chip
-								key={stockName}
-								className="stockChip"
-								avatar={<Avatar>{stockName}</Avatar>}
-								label={this.props.stocks[stockName]}
-							/>
-						);
+						if (this.props.stocks[stockName] > 0)
+							return (
+								<Chip
+									key={stockName}
+									className="stockChip"
+									avatar={<Avatar>{stockName}</Avatar>}
+									label={this.props.stocks[stockName]}
+								/>
+							);
 					})}
 				</div>
 			</Fragment>
@@ -61,6 +62,8 @@ export class Player extends React.PureComponent {
 	}
 
 	render() {
+		console.log('unstarted', this.props.unstarted);
+
 		return (
 			<Paper className="player">
 				<AppBar position="static" className="playerAppBar">
@@ -74,7 +77,7 @@ export class Player extends React.PureComponent {
 					</Toolbar>
 				</AppBar>
 
-				{this.props.gameStatus.state !== 'ready' ? this.renderBody() : null}
+				{this.props.gameStatus !== 'ready' ? this.renderBody() : null}
 			</Paper>
 		);
 	}

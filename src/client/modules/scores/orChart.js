@@ -15,11 +15,11 @@ import {
 export class ORChart extends React.PureComponent {
 	componentDidMount() {
 		this.initializeChart();
-		this.drawChart();
+		if (this.props.operatingRounds.length > 0) this.drawChart();
 	}
 
 	componentDidUpdate() {
-		this.drawChart();
+		if (this.props.operatingRounds.length > 0) this.drawChart();
 	}
 
 	initializeChart() {
@@ -28,6 +28,7 @@ export class ORChart extends React.PureComponent {
 		this.width = this.svg.attr('width') - this.margin.left - this.margin.right;
 		this.height =
 			this.svg.attr('height') - this.margin.top - this.margin.bottom;
+
 		this.g = this.svg
 			.append('g')
 			.attr(
@@ -48,10 +49,10 @@ export class ORChart extends React.PureComponent {
 		this.line = d3
 			.line()
 			.curve(d3.curveBasis)
-			.x(function(d, i) {
+			.x((d, i) => {
 				return this.x(i);
 			})
-			.y(function(d) {
+			.y(d => {
 				return this.y(d);
 			});
 
@@ -69,6 +70,9 @@ export class ORChart extends React.PureComponent {
 			.attr('dy', '0.71em')
 			.attr('fill', '#000')
 			.text('Value ($)');
+
+		this.x.domain([0, Math.max(this.props.operatingRounds.length || 0, 10)]);
+		this.y.domain([0, 200]);
 	}
 
 	drawChart() {
@@ -79,11 +83,26 @@ export class ORChart extends React.PureComponent {
 		this.g.select('.axis--x').call(d3.axisBottom(this.x));
 		this.g.select('.axis--y').call(d3.axisLeft(this.y));
 
-		console.log('data', this.props.operatingRounds);
+		let data = {};
+
+		this.props.startedMajors.forEach(company => {
+			data[company.name] = {
+				id: company.name,
+				values: []
+			};
+		});
+
+		Object.values(this.props.operatingRounds).forEach(round => {
+			Object.keys(round).forEach(company => {
+				data[company].values.push(round[company].total);
+			});
+		});
+
+		data = Object.values(data);
 
 		this.company = this.g
 			.selectAll('.company')
-			.data([])
+			.data(data)
 			.enter()
 			.append('g')
 			.attr('class', 'company');
@@ -99,23 +118,24 @@ export class ORChart extends React.PureComponent {
 			});
 
 		this.company
-			.append('text')
-			.datum(d => {
-				return { id: d.id, value: d.values[d.values.length - 1] };
+			.append('circle')
+			.data((d, i) => {
+				return {
+					id: d.values.length,
+					value: { index: i, value: d.values[d.values.length - 1] || 0 }
+				};
 			})
-			.attr('transform', d => {
-				return (
-					'translate(' +
-					this.x(d.value.date) +
-					',' +
-					this.y(d.value.temperature) +
-					')'
-				);
+			.attr('r', 5)
+			.attr('cx', d => {
+				return this.x(d.value.index);
 			})
-			.attr('x', 3)
-			.attr('dy', '0.35em')
-			.style('font', '10px sans-serif')
-			.text(d => d.id);
+			.attr('cy', d => {
+				return this.y(d.value.value);
+			});
+		// .attr('x', 3)
+		// .attr('dy', '0.35em')
+		// .style('font', '10px sans-serif')
+		// .text(d => d.id);
 	}
 
 	render() {

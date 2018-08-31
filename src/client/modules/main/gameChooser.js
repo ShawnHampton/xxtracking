@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-import { getGameStatus } from './selectors';
 import { createNewGame } from './actions';
 
 export class GameChooser extends React.PureComponent {
@@ -54,9 +53,7 @@ export class GameChooser extends React.PureComponent {
 	}
 }
 
-const mapStateToProps = (state, props) => ({
-	gameStatus: getGameStatus(state)
-});
+const mapStateToProps = (state, props) => ({});
 
 export default connect(
 	mapStateToProps,
