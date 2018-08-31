@@ -45,14 +45,18 @@ export class Scores extends React.PureComponent {
 										{Object.keys(this.props.operatingRound).map(company => {
 											return (
 												<TableCell key={company}>
-													{this.props.operatingRound[company][player.name]}
+													{
+														this.props.operatingRound[company].players[
+															player.name
+														]
+													}
 												</TableCell>
 											);
 										})}
 										<TableCell>
 											{Object.keys(this.props.operatingRound)
 												.map(company => {
-													return this.props.operatingRound[company][
+													return this.props.operatingRound[company].players[
 														player.name
 													];
 												})
@@ -63,6 +67,19 @@ export class Scores extends React.PureComponent {
 									</TableRow>
 								);
 							})}
+							<TableRow>
+								<TableCell component="th" scope="row">
+									Company
+								</TableCell>
+								{Object.keys(this.props.operatingRound).map(company => {
+									return (
+										<TableCell key={company}>
+											{this.props.operatingRound[company].players['company']}
+										</TableCell>
+									);
+								})}
+								<TableCell>--</TableCell>
+							</TableRow>
 						</TableBody>
 					</Table>
 				</Card>

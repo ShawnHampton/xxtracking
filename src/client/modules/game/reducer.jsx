@@ -45,28 +45,26 @@ export default function (state = fromJS({
 			s = state.setIn(['play', 'players', action.payload.playerName, "personalMoney"], action.payload.personalMoney);
 			return s;
 		case PLAYER.SET_STOCK:
-			if (action.payload.count === 0) {
-				s = state.deleteIn(['players', action.payload.playerName, "stocks", action.payload.companyName]);
-			} else {
-				s = state.setIn(['play', 'players', action.payload.playerName, "stocks", action.payload.companyName],
-					action.payload.count);
-			}
+			s = state.setIn(['play', 'players', action.payload.playerName, "stocks", action.payload.companyName], action.payload.count);
 			return s;
 		case COMPANY.START_COMPANY:
-			s = state.setIn(['play', 'startedMajors'], state.getIn(['play', 'startedMajors']).push(action.payload.company));
+			s = state.setIn(['play', 'majors', action.payload.company, "state"], "started");
+			return s;
+		case COMPANY.SET_COMPANY_STOCK:
+			s = state.setIn(['play', 'majors', action.payload.companyName, action.payload.type], action.payload.count);
 			return s;
 		case COMPANY.OPERATE_PAY:
-			s = state.setIn(['play', 'operatingRounds', action.payload.operatingRound, action.payload.companyName],
+			s = state.setIn(['play', 'operatingRounds', String(action.payload.operatingRound), action.payload.companyName],
 				fromJS(action.payload.payoutChart));
 			return s;
 		case GAME.CHANGE_PHASE:
 			s = state.setIn(['play', 'currentPhase'], action.payload);
 			return s;
 		case GAME.CHANGE_CURRENT_OR:
-			s = state.setIn(['play', 'currentOR'], action.payload);
+			s = state.setIn(['play', 'currentOR'], String(action.payload));
 			return s;
 		case GAME.CHANGE_CURRENT_ROUND:
-			s = state.setIn(['play', 'currentRound'], action.payload);
+			s = state.setIn(['play', 'currentRound'], String(action.payload));
 			return s;
 		default:
 	}

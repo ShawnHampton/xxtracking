@@ -15,8 +15,6 @@ import PlayerCreator from './playerCreator';
 
 export class Players extends React.PureComponent {
 	render() {
-		console.log('Player', this.props.players);
-
 		return (
 			<Paper>
 				<AppBar position="static" color="default">
