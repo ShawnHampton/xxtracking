@@ -38,7 +38,7 @@ export class Scores extends React.PureComponent {
 						<TableBody>
 							{this.props.players.map((player, i) => {
 								return (
-									<TableRow key={i}>
+									<TableRow key={i} className="tableRow">
 										<TableCell component="th" scope="row">
 											{player.name}
 										</TableCell>
@@ -67,7 +67,7 @@ export class Scores extends React.PureComponent {
 									</TableRow>
 								);
 							})}
-							<TableRow>
+							<TableRow className="tableRow">
 								<TableCell component="th" scope="row">
 									Company
 								</TableCell>
@@ -78,7 +78,38 @@ export class Scores extends React.PureComponent {
 										</TableCell>
 									);
 								})}
-								<TableCell>--</TableCell>
+								<TableCell>
+									{Object.keys(this.props.operatingRound)
+										.map(company => {
+											return this.props.operatingRound[company].players[
+												'company'
+											];
+										})
+										.reduce((acc, curr) => {
+											return acc + curr;
+										})}
+								</TableCell>
+							</TableRow>
+							<TableRow className="tableRow">
+								<TableCell component="th" scope="row">
+									OR Totals
+								</TableCell>
+								{Object.keys(this.props.operatingRound).map(company => {
+									return (
+										<TableCell key={company}>
+											{Object.keys(this.props.operatingRound[company].players)
+												.map(player => {
+													return this.props.operatingRound[company].players[
+														player
+													];
+												})
+												.reduce((acc, curr) => {
+													return acc + curr;
+												})}
+										</TableCell>
+									);
+								})}
+								<TableCell>{this.getTotal()}</TableCell>
 							</TableRow>
 						</TableBody>
 					</Table>
@@ -87,6 +118,24 @@ export class Scores extends React.PureComponent {
 		}
 
 		return null;
+	}
+
+	getTotal() {
+		let total = 0;
+
+		Object.keys(this.props.operatingRound).forEach(company => {
+			let playerTotal = Object.keys(this.props.operatingRound[company].players)
+				.map(player => {
+					return this.props.operatingRound[company].players[player];
+				})
+				.reduce((acc, curr) => {
+					return acc + curr;
+				});
+
+			total = total + playerTotal;
+		});
+
+		return total;
 	}
 
 	render() {

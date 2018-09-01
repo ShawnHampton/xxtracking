@@ -35,6 +35,52 @@ const GAMES = {
 				state: 'unstarted'
 			}
 		]
+	},
+	'18EU': {
+		name: '18EU',
+		minPlayers: 2,
+		maxPlayers: 6,
+		bankSize: [7700, 7700, 7700, 7700, 7700],
+		initialPlayerMoney: [500, 500, 500, 500, 500],
+
+		majors: [
+			{
+				name: 'KP',
+				ipo: 10,
+				bank: 0,
+				state: 'unstarted'
+			},
+			{
+				name: 'BN',
+				ipo: 10,
+				bank: 0,
+				state: 'unstarted'
+			},
+			{
+				name: 'DR',
+				ipo: 10,
+				bank: 0,
+				state: 'unstarted'
+			},
+			{
+				name: 'FS',
+				ipo: 10,
+				bank: 0,
+				state: 'unstarted'
+			},
+			{
+				name: 'KK',
+				ipo: 10,
+				bank: 0,
+				state: 'unstarted'
+			},
+			{
+				name: 'KB',
+				ipo: 10,
+				bank: 0,
+				state: 'unstarted'
+			}
+		]
 	}
 };
 
@@ -44,6 +90,7 @@ apiRouter
 		console.log('Posting new play for: ', req.body);
 		let play = {
 			bank: 0,
+			createDate: Date.now(),
 			currentPhase: 'SR',
 			currentOR: 1,
 			currentRound: 1,

@@ -62,8 +62,6 @@ export class Player extends React.PureComponent {
 	}
 
 	render() {
-		console.log('unstarted', this.props.unstarted);
-
 		return (
 			<Paper className="player">
 				<AppBar position="static" className="playerAppBar">

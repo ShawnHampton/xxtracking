@@ -26,11 +26,11 @@ function* handleNextRound(action) {
 
 	if (play.currentPhase === 'OR') {
 		if (action.payload === 'OR') {
-			yield put(changeCurrentOR(play.currentOR + 1));
+			yield put(changeCurrentOR(Number(play.currentOR) + 1));
 		} else if (action.payload === 'SR') {
 			yield put(changePhase(action.payload));
 			yield put(changeCurrentOR(1));
-			yield put(changeCurrentRound(play.currentRound + 1));
+			yield put(changeCurrentRound(Number(play.currentRound) + 1));
 		}
 	} else if (play.currentPhase === 'SR') {
 		if (action.payload === 'OR') {

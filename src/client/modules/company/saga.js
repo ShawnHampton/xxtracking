@@ -29,7 +29,13 @@ function* handlePayout(action) {
 		payoutChart.players[players[i].name] = stockCount * shareValue;
 	}
 
-	yield put(operatePay(companyName, play.currentOR, payoutChart));
+	yield put(
+		operatePay(
+			companyName,
+			`${play.currentRound}.${play.currentOR}`,
+			payoutChart
+		)
+	);
 }
 
 function* handleWithhold(action) {

@@ -22,6 +22,8 @@ import { loadSavedGame, saveGame, startGame, stopGame } from './actions';
 import { getPlays } from './selectors';
 import { getGame, getGameStatus, getPlay, getPlayers } from '../game/selectors';
 
+import * as moment from 'moment';
+
 export class Main extends React.PureComponent {
 	render() {
 		if (this.props.gameStatus === 'new') {
@@ -56,7 +58,10 @@ export class Main extends React.PureComponent {
 										<Avatar>
 											<ImageIcon />
 										</Avatar>
-										<ListItemText primary={play.game} secondary="Jan 9, 2014" />
+										<ListItemText
+											primary={play.game}
+											secondary={moment(play.createDate).format('LLLL')}
+										/>
 									</ListItem>
 								);
 							})}
@@ -70,7 +75,7 @@ export class Main extends React.PureComponent {
 					<AppBar position="static" className="mainAppBar">
 						<Toolbar>
 							<Typography variant="title" className="title">
-								{this.props.game.name}
+								{this.props.play.game}
 							</Typography>
 							<Button
 								onClick={this.props.startGame}
@@ -91,7 +96,7 @@ export class Main extends React.PureComponent {
 					<AppBar position="static" className="mainAppBar">
 						<Toolbar>
 							<Typography variant="title" className="title">
-								{this.props.game.name}
+								{this.props.play.game}
 							</Typography>
 							<RoundManager />
 							<Button onClick={() => this.props.saveGame(this.props.play)}>
@@ -111,7 +116,7 @@ export class Main extends React.PureComponent {
 					<AppBar position="static" className="mainAppBar">
 						<Toolbar>
 							<Typography variant="title" className="title">
-								{this.props.game.name}
+								{this.props.play.game}
 							</Typography>
 							<Button onClick={this.props.startGame}>Restart Game</Button>
 						</Toolbar>

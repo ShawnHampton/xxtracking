@@ -54,7 +54,6 @@ export const getUnstartedMajors = createSelector(
 	[getMajorsImmutable],
 	majors => {
 		const u = Object.values(majors.toJS());
-		console.log('majors', u);
 		return u.filter(major => {
 			return major.state === 'unstarted';
 		});

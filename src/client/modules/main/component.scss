@@ -69,5 +69,15 @@
       max-width: 500px;
       margin: 8px;
     }
+
+    .tableRow {
+      &:nth-of-type(odd) {
+        background-color: lightgray;
+      }
+
+      &:last-of-type {
+        background-color: darkgray;
+      }
+    }
   }
 }

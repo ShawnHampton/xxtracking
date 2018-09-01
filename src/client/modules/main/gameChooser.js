@@ -47,6 +47,9 @@ export class GameChooser extends React.PureComponent {
 					<MenuItem onClick={() => this.handleChooseGameMenu('1846')}>
 						1846
 					</MenuItem>
+					<MenuItem onClick={() => this.handleChooseGameMenu('18EU')}>
+						18EU
+					</MenuItem>
 				</Menu>
 			</Fragment>
 		);
