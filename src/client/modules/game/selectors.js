@@ -34,7 +34,9 @@ export const getOperatingRounds = createSelector(
 export const getCurrentOperatingRound = createSelector(
 	[getOperatingRoundsImmutable, getPlayImmutable],
 	(ors, play) => {
-		const current = ors.get(String(play.get('currentOR')));
+		const current = ors.get(
+			String(play.get('currentRound') + '.' + play.get('currentOR'))
+		);
 		return current ? current.toJS() : null;
 	}
 );

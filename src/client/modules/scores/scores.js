@@ -18,6 +18,8 @@ import ORChart from './orChart';
 
 export class Scores extends React.PureComponent {
 	renderScoreCard() {
+		console.log('or', this.props.operatingRound);
+
 		if (this.props.operatingRound) {
 			return (
 				<Card className="operatingRoundCard">
